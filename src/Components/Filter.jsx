@@ -1,4 +1,13 @@
+import { useState } from "react";
+
 export const Filter = ({ setSortConfig, sortConfig, setCondition }) => {
+  const [buttonState, setButtonState] = useState("Select column");
+  const [optButtonState, setOptButtonState] = useState("Choose condition");
+
+  function handleMainFilterButton() {
+    setButtonState(sortConfig.key);
+    setOptButtonState("Choose condition");
+  }
   return (
     <>
       <nav className="mb-50 teal lighten-2">
@@ -9,10 +18,10 @@ export const Filter = ({ setSortConfig, sortConfig, setCondition }) => {
       <div className="row valign-wrapper">
         <div className="col s4">
           <a className="dropdown-trigger btn" href="#!" data-target="dropdown1">
-            Select column
+            {buttonState}
           </a>
           <ul id="dropdown1" className="dropdown-content">
-            <li>
+            <li onClick={handleMainFilterButton}>
               <a
                 onClick={() =>
                   setSortConfig({ direction: "ascenging", key: "name" })
@@ -22,12 +31,12 @@ export const Filter = ({ setSortConfig, sortConfig, setCondition }) => {
                 Name
               </a>
             </li>
-            <li>
+            <li onClick={handleMainFilterButton}>
               <a onClick={() => setSortConfig({ key: "quantity" })} href="#!">
                 Quantity
               </a>
             </li>
-            <li>
+            <li onClick={handleMainFilterButton}>
               <a onClick={() => setSortConfig({ key: "distance" })} href="#!">
                 Distance
               </a>
@@ -42,10 +51,10 @@ export const Filter = ({ setSortConfig, sortConfig, setCondition }) => {
                 href="#!"
                 data-target="dropdown2"
               >
-                Choose condition
+                {optButtonState}
               </a>
               <ul id="dropdown2" className="dropdown-content">
-                <li>
+                <li onClick={() => setOptButtonState("ascending")}>
                   <a
                     onClick={() =>
                       setSortConfig({ direction: "ascenging", key: "name" })
@@ -55,7 +64,7 @@ export const Filter = ({ setSortConfig, sortConfig, setCondition }) => {
                     ascending
                   </a>
                 </li>
-                <li>
+                <li onClick={() => setOptButtonState("descending")}>
                   <a
                     onClick={() =>
                       setSortConfig({ direction: "descending", key: "name" })
@@ -76,10 +85,10 @@ export const Filter = ({ setSortConfig, sortConfig, setCondition }) => {
                 href="#!"
                 data-target="dropdown2"
               >
-                Choose condition
+                {optButtonState}
               </a>
               <ul id="dropdown2" className="dropdown-content">
-                <li>
+                <li onClick={() => setOptButtonState("Equals")}>
                   <a
                     onClick={() =>
                       setSortConfig({
@@ -92,32 +101,48 @@ export const Filter = ({ setSortConfig, sortConfig, setCondition }) => {
                     Equals
                   </a>
                 </li>
-                <li>
+                <li onClick={() => setOptButtonState("Contains")}>
                   <a
-                    onClick={() => setSortConfig({ key: "contains" })}
+                    onClick={() =>
+                      setSortConfig({
+                        ...sortConfig,
+                        ...{ optionKey: "Contains" },
+                      })
+                    }
                     href="#!"
                   >
                     Contains
                   </a>
                 </li>
-                <li>
-                  <a onClick={() => setSortConfig({ key: "more" })} href="#!">
+                <li onClick={() => setOptButtonState("More than")}>
+                  <a
+                    onClick={() =>
+                      setSortConfig({
+                        ...sortConfig,
+                        ...{ optionKey: "more" },
+                      })
+                    }
+                    href="#!"
+                  >
                     More than
                   </a>
                 </li>
-                <li>
-                  <a onClick={() => setSortConfig({ key: "less" })} href="#!">
+                <li onClick={() => setOptButtonState("Less than")}>
+                  <a
+                    onClick={() =>
+                      setSortConfig({
+                        ...sortConfig,
+                        ...{ optionKey: "less" },
+                      })
+                    }
+                    href="#!"
+                  >
                     Less than
                   </a>
                 </li>
               </ul>
             </div>
-            <form
-              className="input-field col s4"
-              onSubmit={(e) => {
-                e.preventDefault();
-              }}
-            >
+            <form className="input-field col s4">
               <div className="input-field">
                 <input
                   onChange={(e) => setCondition(e.target.value)}

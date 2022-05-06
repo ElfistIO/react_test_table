@@ -14,7 +14,7 @@ export const TablePagination = ({
 
   useEffect(() => {
     setTotalPages(Math.ceil(totalCount / pageSize));
-  }, [pageSize]);
+  }, [pageSize, totalCount]);
 
   const paginationRange = usePagination({
     currentPage,
@@ -55,7 +55,6 @@ export const TablePagination = ({
             key={index}
             active={(currentPage === current).toString()}
             onClick={() => onPageChange(current)}
-            disabled={totalCount <= pageSize}
           >
             <a href="#!">{current}</a>
           </li>

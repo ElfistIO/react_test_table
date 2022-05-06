@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Filter } from "./Filter";
 import TablePagination from "./TablePagination";
 
@@ -17,14 +17,12 @@ export const SortableTable = ({ rows }) => {
   useMemo(() => {
     const firstPageIndex = (currentPage - 1) * pageSize;
     const lastPageIndex = firstPageIndex + pageSize;
-
     const newData = rows.slice(firstPageIndex, lastPageIndex);
-
     setRowsState(newData);
-  }, [currentPage, pageSize]);
+  }, [currentPage, pageSize, rows]);
 
   useMemo(() => {
-    let sortedRows = [...rowsState]; /// rows
+    let sortedRows = [...rowsState];
     if (sortConfig.key === "name") {
       sortedRows.sort((a, b) => {
         if (a[sortConfig.key] < b[sortConfig.key]) {
@@ -33,6 +31,7 @@ export const SortableTable = ({ rows }) => {
         if (a[sortConfig.key] > b[sortConfig.key]) {
           return sortConfig.direction === "descending" ? -1 : 1;
         }
+        return 0;
       });
       setSortState(sortedRows);
     } else if (
@@ -44,39 +43,73 @@ export const SortableTable = ({ rows }) => {
       );
       setSortState(filteredRows);
       return;
-    } else if (sortConfig.key === "contains") {
+    } else if (
+      (sortConfig.key === "quantity") &
+      (sortConfig.optionKey === "contains")
+    ) {
       let filteredRows = sortedRows.filter(
-        (row) => row.quantity === parseInt(condition)
+        (row) =>
+          row.toString().toLowerCase().indexOf(condition.toLowerCase()) !== -1
       );
       setSortState(filteredRows);
       return;
-    } else if (sortConfig.key === "more") {
+    } else if (
+      (sortConfig.key === "quantity") &
+      (sortConfig.optionKey === "more")
+    ) {
       let filteredRows = sortedRows.filter(
-        (row) => row.quantity > parseInt(condition)
+        (row) => row.quantity >= parseInt(condition)
       );
       setSortState(filteredRows);
       return;
-    } else if (sortConfig.key === "less") {
+    } else if (
+      (sortConfig.key === "quantity") &
+      (sortConfig.optionKey === "less")
+    ) {
       let filteredRows = sortedRows.filter(
-        (row) => row.quantity < parseInt(condition)
+        (row) => row.quantity <= parseInt(condition)
+      );
+      setSortState(filteredRows);
+      return;
+    } else if (
+      (sortConfig.key === "distance") &
+      (sortConfig.optionKey === "equals")
+    ) {
+      let filteredRows = sortedRows.filter(
+        (row) => row.distance === parseInt(condition)
+      );
+      setSortState(filteredRows);
+      return;
+    } else if (
+      (sortConfig.key === "distance") &
+      (sortConfig.optionKey === "contains")
+    ) {
+      let filteredRows = sortedRows.filter(
+        (row) => row.distance === parseInt(condition)
+      );
+      setSortState(filteredRows);
+      return;
+    } else if (
+      (sortConfig.key === "distance") &
+      (sortConfig.optionKey === "more")
+    ) {
+      let filteredRows = sortedRows.filter(
+        (row) => row.distance >= parseInt(condition)
+      );
+      setSortState(filteredRows);
+      return;
+    } else if (
+      (sortConfig.key === "distance") &
+      (sortConfig.optionKey === "less")
+    ) {
+      let filteredRows = sortedRows.filter(
+        (row) => row.distance <= parseInt(condition)
       );
       setSortState(filteredRows);
       return;
     }
-    // return sortedRows;
-  }, [rowsState, sortConfig]);
-
-  // const requestSort = (key) => {
-  //   let direction = key;
-  //   if (
-  //     sortConfig &&
-  //     sortConfig.key === key &&
-  //     sortConfig.direction === "ascending"
-  //   ) {
-  //     direction = "descending";
-  //   }
-  //   setSortConfig({ key, direction });
-  // };
+    return sortedRows;
+  }, [rowsState, sortConfig, condition]);
 
   return (
     <>
@@ -104,18 +137,24 @@ export const SortableTable = ({ rows }) => {
             </tr>
           </thead>
           <tbody>
-            {sortState.map((row, index) => {
-              if (index < pageSize) {
-                return (
-                  <tr key={row.id}>
-                    <td>{row.date}</td>
-                    <td>{row.name}</td>
-                    <td>{row.quantity}</td>
-                    <td>{row.distance}</td>
-                  </tr>
-                );
-              }
-            })}
+            {sortState.length > 0 ? (
+              sortState.map((row, index) => {
+                if (index < pageSize) {
+                  return (
+                    <tr key={row.id}>
+                      <td>{row.date}</td>
+                      <td>{row.name}</td>
+                      <td>{row.quantity}</td>
+                      <td>{row.distance}</td>
+                    </tr>
+                  );
+                }
+              })
+            ) : (
+              <tr>
+                <td>Nothing has been found...</td>
+              </tr>
+            )}
           </tbody>
         </table>
         <TablePagination
@@ -129,6 +168,7 @@ export const SortableTable = ({ rows }) => {
           setSortConfig={setSortConfig}
           sortConfig={sortConfig}
           setCondition={setCondition}
+          condition={condition}
         />
       </div>
     </>

@@ -1,0 +1,82 @@
+[{
+  "_id": {
+    "$oid": "6273b02ae41fd8335c1d33a3"
+  },
+  "id": 1,
+  "date": "05.05.2022",
+  "name": "name1",
+  "quantity": 20,
+  "distance": 20
+},{
+  "_id": {
+    "$oid": "6273b02ae41fd8335c1d33a4"
+  },
+  "id": 2,
+  "date": "03.04.2022",
+  "name": "name2",
+  "quantity": 30,
+  "distance": 15
+},{
+  "_id": {
+    "$oid": "6273b02ae41fd8335c1d33a5"
+  },
+  "id": 3,
+  "date": "14.04.2022",
+  "name": "name3",
+  "quantity": 10,
+  "distance": 5
+},{
+  "_id": {
+    "$oid": "6273b02ae41fd8335c1d33a6"
+  },
+  "id": 4,
+  "date": "22.02.2022",
+  "name": "name4",
+  "quantity": 25,
+  "distance": 25
+},{
+  "_id": {
+    "$oid": "627417fbe3460d44594493ea"
+  },
+  "id": 5,
+  "date": "02.01.2022",
+  "name": "name5",
+  "quantity": 60,
+  "distance": 50
+},{
+  "_id": {
+    "$oid": "62741824e3460d44594493eb"
+  },
+  "id": 6,
+  "date": "05.02.2022",
+  "name": "name6",
+  "quantity": 120,
+  "distance": 50
+},{
+  "_id": {
+    "$oid": "6274a56fe3460d44594493ec"
+  },
+  "id": 7,
+  "date": "24.05.2021",
+  "name": "name7",
+  "quantity": "70",
+  "distance": "80"
+},{
+  "_id": {
+    "$oid": "627561d79c4a4b83eda19914"
+  },
+  "id": 8,
+  "date": "15.03.2020",
+  "name": "name8",
+  "quantity": 60,
+  "distance": 30
+},{
+  "_id": {
+    "$oid": "627561f49c4a4b83eda19915"
+  },
+  "id": 9,
+  "date": "06.02.2021",
+  "name": "name9",
+  "quantity": 25,
+  "distance": 35
+}]
