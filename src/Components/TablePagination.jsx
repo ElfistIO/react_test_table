@@ -29,13 +29,23 @@ export const TablePagination = ({
   };
 
   const handleNextClick = () => {
-    onPageChange(currentPage + 1);
+    let changedPage =
+      currentPage < Math.ceil(totalCount / pageSize)
+        ? currentPage + 1
+        : currentPage;
+    onPageChange(changedPage);
   };
 
   return (
-    <ul className="pagination">
-      <li onClick={() => handlePrevClick()} disabled={currentPage === 1}>
-        <i className="material-icons">chevron_left</i>
+    <ul className="pagination center-align mb-50">
+      <li
+        className="waves-effect"
+        onClick={() => handlePrevClick()}
+        disabled={currentPage === 1}
+      >
+        <a href="#!">
+          <i className="material-icons">chevron_left</i>
+        </a>
       </li>
       {paginationRange.map((_pageNumber, index) => {
         let current = index + 1;
@@ -43,19 +53,22 @@ export const TablePagination = ({
           <li
             className="waves-effect"
             key={index}
-            active={currentPage === current}
+            active={(currentPage === current).toString()}
             onClick={() => onPageChange(current)}
             disabled={totalCount <= pageSize}
           >
-            {current}
+            <a href="#!">{current}</a>
           </li>
         );
       })}
       <li
+        className="waves-effect"
         onClick={() => handleNextClick()}
         disabled={currentPage === totalPages}
       >
-        <i className="material-icons">chevron_right</i>
+        <a href="#!">
+          <i className="material-icons">chevron_right</i>
+        </a>
       </li>
     </ul>
   );

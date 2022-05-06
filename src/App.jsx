@@ -14,7 +14,7 @@ function App() {
     });
   }, []);
 
-  return <SortableTable rowsProps={data} />;
+  return <SortableTable rows={data} />;
 }
 
 export default App;
